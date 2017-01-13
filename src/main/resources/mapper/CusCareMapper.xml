@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="CusCareMapper">
+
+    <resultMap id="BaseResultMap" type="com.isolr.model.SolrIndex">
+        <id column="ID" property="bid" />
+        <result column="COMPANY_ID" property="companyId" />
+        <result column="USER_ID" property="userId" />
+        <result column="USER_NAME" property="userName" />
+        <result column="CREATE_TIME" property="createTime" />
+        <result column="REMARK" property="content" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        ID, COMPANY_ID, USER_ID, USER_NAME,
+        UNIX_TIMESTAMP(CREATE_TIME) CREATE_TIME, CONCAT(IFNULL(CUS_NAME,''), IFNULL(REMARK,''),
+        IFNULL(ADDRESS,'')) REMARK
+    </sql>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from T_CUS_CARE
+    </select>
+
+    <select id="findById" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from T_CUS_CARE
+        WHERE ID = #{id}
+    </select>
+
+</mapper>
